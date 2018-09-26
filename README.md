@@ -1,0 +1,30 @@
+# service-logger
+
+Logging helper based on [Winston](https://github.com/winstonjs/winston) for all services
+
+## Quick start
+
+```js
+const createLogger = require('@bloq/service-logger')
+
+const logger = createLogger({
+  Console: {
+    level: 'debug'
+  },
+  Papertrail: {
+    level: 'info',
+    host: 'logs42.papertrailapp.com',
+    port: '11666',
+    program: 'awesome-service'
+  }
+})
+
+logger.info('Logging to all transports!')
+```
+
+## Supported transports
+
+- [`Winston`](https://github.com/winstonjs/winston) core transports
+- [`Papertrail`](https://github.com/kenperkins/winston-papertrail)
+- [`Sentry`](https://github.com/fintechdev/Winston-Sentry-Transport)
+- [`Slack`](https://github.com/niftylettuce/slack-winston)

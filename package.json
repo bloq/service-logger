@@ -1,0 +1,52 @@
+{
+  "name": "@bloq/service-logger",
+  "version": "1.0.0",
+  "description": "Logging helper based on Winston for all services",
+  "keywords": [
+    "logger",
+    "papertrail",
+    "sentry",
+    "service",
+    "slack",
+    "winston"
+  ],
+  "license": "MIT",
+  "author": "Gabriel Montes <gabriel@bloq.com>",
+  "files": [
+    "src"
+  ],
+  "main": "src/index.js",
+  "repository": "bloq/service-logger",
+  "scripts": {
+    "check": "dependency-check . && dependency-check . --unused --no-dev",
+    "check:outdated": "npm-check -i eslint-config-plugin* -i husky",
+    "lint": "eslint --cache .",
+    "precommit": "npm run lint",
+    "prepublishOnly": "npm run precommit && npm run prepush && tag-matches",
+    "prepush": "npm run check"
+  },
+  "dependencies": {
+    "debug": "^4.0.1",
+    "winston": "^2.4.4"
+  },
+  "devDependencies": {
+    "check-tag-matches": "^1.0.0",
+    "dependency-check": "^3.2.0",
+    "eslint": "^5.5.0",
+    "eslint-config-bloq": "^1.3.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsdoc": "^3.8.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-prefer-arrow": "^1.1.2",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "husky": "^1.0.0",
+    "npm-check": "^5.8.0"
+  },
+  "optionalDependencies": {
+    "slack-winston": "^0.0.9",
+    "winston-papertrail": "^1.0.5",
+    "winston-sentry-transport": "^1.0.0"
+  }
+}

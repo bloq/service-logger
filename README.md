@@ -1,6 +1,6 @@
 # service-logger
 
-Logging helper based on [Winston](https://github.com/winstonjs/winston) for all services
+Logging helper based on [Winston](https://github.com/winstonjs/winston) 2.x.
 
 ## Quick start
 
@@ -28,3 +28,5 @@ logger.info('Logging to all transports!')
 - [`Papertrail`](https://github.com/kenperkins/winston-papertrail)
 - [`Sentry`](https://github.com/fintechdev/Winston-Sentry-Transport)
 - [`Slack`](https://github.com/niftylettuce/slack-winston)
+
+These transports will be used only when installed along this module.

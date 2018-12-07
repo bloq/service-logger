@@ -5,7 +5,7 @@ const winston = require('winston')
 
 const supported = require('./transports')
 
-Object.keys(supported).forEach(function (name) {
+Object.keys(supported).forEach(function(name) {
   try {
     supported[name].require(winston)
     debug(`Transport for ${name} loaded`)
@@ -14,14 +14,20 @@ Object.keys(supported).forEach(function (name) {
   }
 })
 
-function createLogger (config) {
+/**
+ * Create a logger.
+ *
+ * @param {object} config The logger configuration.
+ * @returns {winston.LoggerInstance} A Winston logger instance.
+ */
+function createLogger(config) {
   const transports = Object.keys(config)
-    .map(name =>
-      config[name] &&
+    .map(
+      name =>
+        config[name] &&
         (supported[name] && supported[name].prop
           ? config[name][supported[name].prop]
-          : true
-        ) &&
+          : true) &&
         new winston.transports[name](config[name])
     )
     .filter(transport => !!transport)

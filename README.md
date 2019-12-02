@@ -26,7 +26,7 @@ logger.info('Logging to all transports!')
 
 - [`Winston`](https://github.com/winstonjs/winston) core transports
 - [`Papertrail`](https://github.com/kenperkins/winston-papertrail)
-- [`Sentry`](https://github.com/fintechdev/Winston-Sentry-Transport)
+- [`Sentry`](https://github.com/niftylettuce/winston-raven-sentry)
 - [`Slack`](https://github.com/niftylettuce/slack-winston)
 
 These transports will be used only when installed along this module.

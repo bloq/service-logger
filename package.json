@@ -29,7 +29,7 @@
     "slack-winston": "^0.0.9",
     "winston": "^2.4.4",
     "winston-papertrail": "^1.0.5",
-    "winston-sentry-transport": "^1.0.0"
+    "winston-raven-sentry": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",

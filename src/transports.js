@@ -9,7 +9,7 @@ module.exports = {
   },
   Sentry: {
     require() {
-      require('winston-sentry-transport')
+      require('winston-raven-sentry')
     },
     prop: 'dns'
   },

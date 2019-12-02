@@ -1,7 +1,8 @@
 'use strict'
 
+const should = require('chai').should()
+
 require('dotenv').config()
-require('chai').should()
 
 const createLogger = require('..')
 
@@ -26,5 +27,10 @@ describe('Service logger', function() {
     const config = { Papertrail: {} }
     const logger = createLogger(config)
     Object.keys(logger.transports).should.have.lengthOf(0)
+  })
+
+  it('should throw if the transport name is not supported', function() {
+    const config = { WrongTransport: {} }
+    should.throw(() => createLogger(config), 'Unsupported')
   })
 })

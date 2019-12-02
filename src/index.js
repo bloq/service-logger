@@ -6,12 +6,8 @@ const winston = require('winston')
 const supported = require('./transports')
 
 Object.keys(supported).forEach(function(name) {
-  try {
-    supported[name].require(winston)
-    debug(`Transport for ${name} loaded`)
-  } catch (err) {
-    debug(`Optional transport for ${name} not found`)
-  }
+  supported[name].require(winston)
+  debug('Transport %s loaded', name)
 })
 
 /**
@@ -31,7 +27,7 @@ function createLogger(config) {
         new winston.transports[name](config[name])
     )
     .filter(transport => !!transport)
-
+  debug('Creating logger with %d transports', transports.length)
   return new winston.Logger({ transports })
 }
 

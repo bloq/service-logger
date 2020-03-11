@@ -27,7 +27,7 @@
   "dependencies": {
     "debug": "^4.1.1",
     "slack-winston": "^0.0.9",
-    "winston": "^2.4.4",
+    "winston": "^3.0.0",
     "winston-papertrail": "^1.0.5",
     "winston-raven-sentry": "^2.0.0"
   },

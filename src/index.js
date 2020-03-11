@@ -41,7 +41,7 @@ function createLogger(config) {
     )
     .filter(transport => !!transport)
   debug('Creating logger with %d transports', transports.length)
-  return new winston.Logger({ transports })
+  return winston.createLogger({ transports });
 }
 
 module.exports = createLogger

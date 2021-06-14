@@ -1,47 +1,53 @@
 'use strict'
 
-const debug = require('debug')('service-logger')
 const winston = require('winston')
-
-const supported = require('./transports')
-
-/**
- * Create a new Winston transport.
- *
- * @param {object} config The logger configuration.
- * @param {string} name The name of the transport.
- * @returns {winston.TransportInstance} A new transport instance.
- */
-function createTransport(config, name) {
-  if (!winston.transports[name]) {
-    if (!supported[name]) {
-      throw new Error(`Unsupported transport ${name}`)
-    }
-    supported[name].require(winston)
-    debug('Transport %s loaded', name)
-  }
-  return new winston.transports[name](config[name])
-}
 
 /**
  * Create a logger.
  *
- * @param {object} config The logger configuration.
- * @returns {winston.LoggerInstance} A Winston logger instance.
+ * @param {object} [config] The logger configuration.
+ * @returns {winston.Logger} A Winston logger instance.
  */
-function createLogger(config) {
-  const transports = Object.keys(config)
-    .map(
-      name =>
-        config[name] &&
-        (supported[name] && supported[name].prop
-          ? config[name][supported[name].prop]
-          : true) &&
-        createTransport(config, name)
+const createLogger = function (config = {}) {
+  const transports = []
+
+  transports.push(
+    new winston.transports.Console({
+      handleExceptions: true,
+      handleRejections: true,
+      ...config.Console
+    })
+  )
+
+  if (config.Papertrail && config.Papertrail.host) {
+    const { PapertrailTransport } = require('winston-papertrail-transport')
+    transports.push(
+      new PapertrailTransport({
+        handleExceptions: true,
+        ...config.Papertrail
+      })
     )
-    .filter(transport => !!transport)
-  debug('Creating logger with %d transports', transports.length)
-  return new winston.Logger({ transports })
+  }
+
+  const logger = winston.createLogger({
+    format: winston.format.combine(
+      winston.format.splat(),
+      winston.format.colorize(),
+      winston.format.simple()
+    ),
+    transports
+  })
+
+  // Force libraries like `debug` that output to stderr to log through Winston.
+  if (!config.dontCaptureStderr) {
+    const _write = process.stderr.write.bind(process.stderr)
+    process.stderr.write = function (message, ...rest) {
+      logger.debug(message.trim())
+      return _write('', ...rest)
+    }
+  }
+
+  return logger
 }
 
 module.exports = createLogger

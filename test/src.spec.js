@@ -1,36 +1,20 @@
 'use strict'
 
-const should = require('chai').should()
-
-require('dotenv').config()
+require('chai').should()
 
 const createLogger = require('..')
 
-const { PAPERTRAIL_HOST, PAPERTRAIL_PORT } = process.env
-
-describe('Service logger', function() {
-  it('should instantiate a single logger', function() {
-    const config = { Console: { level: 'debug' } }
-    const logger = createLogger(config)
+describe('Service logger', function () {
+  it('should instantiate a single Console logger', function () {
+    const logger = createLogger()
     Object.keys(logger.transports).should.have.lengthOf(1)
   })
 
-  it('should instantiate a logger with required prop', function() {
+  it('should instantiate an optional logger', function () {
     const config = {
-      Papertrail: { host: PAPERTRAIL_HOST, port: PAPERTRAIL_PORT }
+      Papertrail: { host: 'test.papertrailapp.com', port: '7327' }
     }
     const logger = createLogger(config)
-    Object.keys(logger.transports).should.have.lengthOf(1)
-  })
-
-  it('should not instantiate a logger without required prop', function() {
-    const config = { Papertrail: {} }
-    const logger = createLogger(config)
-    Object.keys(logger.transports).should.have.lengthOf(0)
-  })
-
-  it('should throw if the transport name is not supported', function() {
-    const config = { WrongTransport: {} }
-    should.throw(() => createLogger(config), 'Unsupported')
+    Object.keys(logger.transports).should.have.lengthOf(2)
   })
 })
